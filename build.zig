@@ -6,6 +6,7 @@ pub fn build(b: *std.build.Builder) void {
 
     addDay(b, target, mode, "Day1", "Day1/day1.zig");
     addDay(b, target, mode, "Day2", "Day2/day2.zig");
+    addDay(b, target, mode, "Day3", "Day3/day3.zig");
 }
 
 fn addDay(b: *std.build.Builder, target: std.zig.CrossTarget, mode: std.builtin.Mode,
