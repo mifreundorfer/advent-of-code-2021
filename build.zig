@@ -1,17 +1,16 @@
 const std = @import("std");
 
 pub fn build(b: *std.build.Builder) void {
-    // Standard target options allows the person running `zig build` to choose
-    // what target to build for. Here we do not override the defaults, which
-    // means any target is allowed, and the default is native. Other options
-    // for restricting supported target set are available.
     const target = b.standardTargetOptions(.{});
-
-    // Standard release options allow the person running `zig build` to select
-    // between Debug, ReleaseSafe, ReleaseFast, and ReleaseSmall.
     const mode = b.standardReleaseOptions();
 
-    const exe = b.addExecutable("Day1", "Day1/day1.zig");
+    addDay(b, target, mode, "Day1", "Day1/day1.zig");
+    addDay(b, target, mode, "Day2", "Day2/day2.zig");
+}
+
+fn addDay(b: *std.build.Builder, target: std.zig.CrossTarget, mode: std.builtin.Mode,
+    name: []const u8, main_file: []const u8) void {
+    const exe = b.addExecutable(name, main_file);
     exe.setTarget(target);
     exe.setBuildMode(mode);
     exe.install();
@@ -22,6 +21,6 @@ pub fn build(b: *std.build.Builder) void {
         run_cmd.addArgs(args);
     }
 
-    const run_step = b.step("run", "Run the app");
+    const run_step = b.step(name, "Run this day");
     run_step.dependOn(&run_cmd.step);
 }
